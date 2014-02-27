@@ -41,12 +41,8 @@ public class HttpConnection {
         HttpURLConnection connection;
         try {
             URL urlObj = new URL(url);
-            if (proxy) {
-                setProxy();
-                connection = (HttpURLConnection) urlObj.openConnection();
-            } else {
-                connection = (HttpURLConnection) urlObj.openConnection();
-            }
+            if (proxy) setProxy();
+            connection = (HttpURLConnection) urlObj.openConnection();
 
             connection.setRequestMethod("GET");
             connection.setRequestProperty("User-Agent", USER_AGENT);
@@ -64,7 +60,6 @@ public class HttpConnection {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return response.toString();
     }
 

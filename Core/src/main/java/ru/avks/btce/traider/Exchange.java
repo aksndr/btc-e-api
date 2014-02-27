@@ -2,7 +2,6 @@ package ru.avks.btce.traider;
 
 import org.apache.commons.codec.binary.Hex;
 import ru.avks.btce.api.IBTCEPersonalAPI;
-import ru.avks.btce.api.IBTCEPublicAPI;
 import ru.avks.btce.model.*;
 import ru.avks.btce.model.personal.*;
 import ru.avks.btce.net.HttpConnection;
@@ -23,7 +22,7 @@ public class Exchange implements IBTCEPersonalAPI {
 
     private HttpConnection httpConnection;
 
-    private IBTCEPublicAPI currencyObject;
+    private Pair currencyObject;
 
 
     public Exchange(String key, String secret) {
@@ -31,8 +30,9 @@ public class Exchange implements IBTCEPersonalAPI {
         this.secret = secret;
     }
 
-    public void setCurrencyObject(IBTCEPublicAPI currencyObject) {
-        this.currencyObject = currencyObject;
+
+    public void setCurrencyObject(Enum currencyType) {
+        this.currencyObject = new Pair(currencyType.toString());
     }
 
     public void setHttpConnection(HttpConnection connection) {

@@ -2,13 +2,13 @@
  * User: a.arzamastsev Date: 27.02.14 Time: 12:52
  */
 
-import ru.avks.btce.exchange.BTCRUR;
-import ru.avks.btce.model.personal.InfoObject;
 import ru.avks.btce.net.HttpConnection;
+import ru.avks.btce.traider.CurrencyPairType;
 import ru.avks.btce.traider.Exchange;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Properties;
 
 public class MainTest {
@@ -29,16 +29,17 @@ public class MainTest {
             HttpConnection httpConnection = new HttpConnection(proxyHost, proxyPort, user, password);
             Exchange exchange = new Exchange(key, secret);
             exchange.setHttpConnection(httpConnection);
-            exchange.setCurrencyObject(new BTCRUR());
-            InfoObject infoObject = exchange.getInfo();
-            System.out.print(infoObject.getBTC());
+            exchange.setCurrencyObject(CurrencyPairType.btc_rur);
+            BigDecimal vol = exchange.getTicker().getVol();
+            System.out.print(vol);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
     }
+
     private static void readProperties() throws IOException {
         prop = new Properties();
         InputStream input = null;
@@ -46,7 +47,7 @@ public class MainTest {
         try {
             input = MainTest.class.getResourceAsStream("app.properties");
             prop.load(input);
-            if (prop.size()>0){
+            if (prop.size() > 0) {
                 key = prop.getProperty("key");
                 secret = prop.getProperty("secret");
 
